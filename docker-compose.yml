@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15 # Use PostgreSQL 15
+    restart: unless-stopped # Automatically restart if it stops
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: quiz
+      # For production, consider using Docker secrets or external configuration for credentials
+    ports:
+      - "5432:5432" # Map host port 5432 to container port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist database data
+    healthcheck: # Ensure DB is ready before backend connects
+      test: ["CMD-SHELL", "pg_isready -U postgres -d quiz"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s # Give DB a little more time to start initially
+
+  backend:
+    build:
+      context: . # Build context is the directory where docker-compose.yml is (Quiz/)
+      dockerfile: Dockerfile # Use the Dockerfile in the current directory
+    depends_on:
+      db:
+        condition: service_healthy # Wait for the 'db' service to be healthy
+    ports:
+      - "3001:3000" # Map host port 3001 to container port 3000 (where Node.js app runs)
+    env_file:
+      - .env # Load environment variables from .env file
+    # Volumes for development:
+    # - This mounts your local 'backend' folder to '/app/backend' inside the container.
+    #   This is useful for hot-reloading during development without rebuilding the image.
+    #   However, it can sometimes hide build issues (like your current one) because the files
+    #   are mounted *after* the build. For production, you'd typically remove this line
+    #   and rely solely on the files copied during the build.
+    # - The named volume for node_modules prevents local node_modules from overriding
+    #   the ones installed inside the container and helps with performance.
+    # No volume mounts - use the built image for better reliability
+    command: sh -c "npx prisma migrate deploy && node backend/server.js" # Run migrations and start server.js
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data: # Define the named volume for PostgreSQL data

@@ -1,0 +1,194 @@
+/* frontend/src/components/Leaderboard.css */
+.leaderboard-container {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+  height: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.leaderboard-container.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-neutral-mid) transparent;
+}
+
+.leaderboard-container.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.leaderboard-container.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.leaderboard-container.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-neutral-mid);
+  border-radius: 3px;
+}
+
+.leaderboard-container.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-neutral-text);
+}
+
+.leaderboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-base);
+  border-bottom: 1px solid var(--color-neutral-mid);
+}
+
+.leaderboard-title {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-dark);
+  margin: 0;
+}
+
+.leaderboard-subtitle {
+  font-size: var(--font-size-small);
+  color: var(--color-neutral-text);
+  margin: 0;
+}
+
+.leaderboard-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-base);
+  border-radius: var(--border-radius-base);
+  background-color: var(--color-neutral-light);
+  transition: all var(--transition-fast);
+}
+
+.leaderboard-item:hover {
+  background-color: var(--color-neutral-mid);
+  transform: translateX(2px);
+}
+
+.leaderboard-item.current-player {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.leaderboard-item.current-player .player-name {
+  color: var(--color-white);
+}
+
+.leaderboard-item.current-player .player-score {
+  color: var(--color-white);
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+}
+
+.medal-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+}
+
+.medal-icon.gold {
+  color: #FFD700;
+}
+
+.medal-icon.silver {
+  color: #C0C0C0;
+}
+
+.medal-icon.bronze {
+  color: #CD7F32;
+}
+
+.player-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-body);
+  background-color: var(--color-neutral-mid);
+  color: var(--color-neutral-dark);
+}
+
+.player-name {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.player-score {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  text-align: right;
+}
+
+.rank-number {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-text);
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Empty state */
+.leaderboard-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--color-neutral-text);
+  text-align: center;
+}
+
+.leaderboard-empty p {
+  margin: var(--spacing-sm) 0;
+  font-size: var(--font-size-small);
+}
+
+/* Loading state */
+.leaderboard-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--color-neutral-text);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .leaderboard-container {
+    max-height: none;
+    height: auto;
+  }
+  
+  .player-name {
+    max-width: 150px;
+  }
+}
