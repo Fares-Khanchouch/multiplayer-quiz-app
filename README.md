@@ -69,7 +69,7 @@ docker-compose up -d --build
 ```
 
 The application will be available at:
-- **Frontend**: http://localhost:3000
+- **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:3001
 - **Database**: localhost:5432
 
@@ -132,7 +132,7 @@ docker-compose exec backend npm run seed
 
 ### Creating a Game
 
-1. Open the application in your browser (http://localhost:3000)
+1. Open the application in your browser (http://localhost:5173)
 2. Enter your player name
 3. Click "Create New Game"
 4. Share the generated Session ID with other players
@@ -203,20 +203,24 @@ Quiz/
 ├── backend/                 # Node.js backend server
 │   ├── package.json
 │   ├── server.js           # Main server file
-│   └── Dockerfile
+│   └── node_modules/
 ├── frontend/               # React frontend application
 │   ├── src/
 │   │   ├── components/     # React components
 │   │   ├── App.jsx         # Main app component
 │   │   └── socket.js       # Socket.io client setup
 │   ├── package.json
-│   └── Dockerfile
+│   ├── Dockerfile          # Frontend Dockerfile
+│   └── node_modules/
 ├── prisma/                 # Database schema and migrations
 │   ├── schema.prisma       # Database schema
 │   ├── seed.js            # Database seeding script
 │   └── migrations/        # Database migrations
 ├── docker-compose.yml      # Docker services configuration
+├── Dockerfile              # Backend Dockerfile (root level)
+├── package.json            # Root package.json for development
 ├── .env                    # Environment variables
+├── .gitignore             # Git ignore rules
 └── README.md
 ```
 
@@ -299,9 +303,11 @@ docker-compose logs db
 docker-compose logs -f backend
 ```
 
+
+
 ## 🚧 Current Status
 
-This is the **first working prototype** of our multiplayer quiz application. We're actively developing and improving the system.
+This is the **first working prototype** of my multiplayer quiz application. I'm actively developing and improving the system.
 
 ### ✅ Completed Features
 - Real-time multiplayer gameplay
@@ -327,18 +333,6 @@ This is the **first working prototype** of our multiplayer quiz application. We'
 - Real-time chat
 - Sound effects and animations
 
-## 🤝 Contributing
-
-We welcome contributions! Please feel free to submit issues, feature requests, or pull requests.
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 📞 Support
-
-If you encounter any issues or have questions, please open an issue in the repository or contact the development team.
-
 ---
 
-**Note**: This is a prototype version. The application is functional but may have bugs or incomplete features. We're actively working on improvements and new features. 
+**Note**: This is a prototype version. The application is functional but may have bugs or incomplete features. I'm actively working on improvements and new features. 
